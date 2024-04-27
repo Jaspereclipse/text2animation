@@ -11,6 +11,10 @@
 h2 {
   font-family: "Lato", sans-serif;
 }
+button {
+  border: 2px solid #8862e0;
+  /* other styles... */
+}
 
 .app-main {
   display: flex;
@@ -18,7 +22,24 @@ h2 {
   align-items: center;
 }
 
+.app-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  gap: 20px;
+}
+
+.input-column,
+.output-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
 .app-input {
+  border-radius: 10px;
   height: 35px;
   margin: 20px;
   border: 2px solid black;
@@ -28,6 +49,7 @@ h2 {
 }
 
 .result-image {
+  border-radius:10px;
   margin-top: 20px;
   width: 350px;
 }
