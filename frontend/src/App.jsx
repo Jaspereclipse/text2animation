@@ -55,7 +55,7 @@ function App() {
   };
 
   const generateImage = async () => {
-    setPlaceholder(`Search ${prompt}..`);
+    setPlaceholder(`Generate ${prompt}...`);
     setLoading(true);
     const res = await openai.images.generate({
       model: "dall-e-3",
@@ -84,7 +84,7 @@ function App() {
         <>
           <Lottie options={defaultOptions} height={150} width={150} />
           <img src="/logo.svg" alt="Your image" height={80} width={1000} />
-          <br/>
+          <br />
           <div className="app-columns">
             <div className="input-column">
               <h2>Describe your character</h2>
