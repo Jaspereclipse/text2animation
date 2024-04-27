@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import "./App.css";
 import Lottie from "react-lottie";
 import animationData from "./assets/dino-lottie.json";
@@ -22,11 +22,10 @@ function App() {
   );
   const [animatedResult, setAnimatedResult] = useState("");
 
-  const configuration = new Configuration({
-    apiKey: import.meta.env.VITE_Open_AI_Key,
+  const openai = new OpenAI({
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true,
   });
-
-  const openai = new OpenAIApi(configuration);
 
   const animateImage = async () => {
     try {
@@ -50,13 +49,14 @@ function App() {
   const generateImage = async () => {
     setPlaceholder(`Search ${prompt}..`);
     setLoading(true);
-    const res = await openai.createImage({
+    const res = await openai.images.generate({
+      model: "dall-e-3",
       prompt: prompt,
       n: 1,
-      size: "512x512",
+      size: "1024x1024",
     });
     setLoading(false);
-    setResult(res.data.data[0].url);
+    setResult(res.data[0].url);
   };
 
   return (
