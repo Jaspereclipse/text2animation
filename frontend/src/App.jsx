@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import "./App.css";
 import Lottie from "react-lottie";
-import animationData from "../public/dino-lottie.json";
+import animationData from "./assets/dino-lottie.json";
 
 const defaultOptions = {
   loop: true,
@@ -18,15 +18,14 @@ function App() {
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState(
-    "Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
+    "A teddy bear that is a Warriors superfan"
   );
   const [animatedResult, setAnimatedResult] = useState("");
 
-  const configuration = new Configuration({
-    apiKey: import.meta.env.VITE_Open_AI_Key,
+  const openai = new OpenAI({
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true,
   });
-
-  const openai = new OpenAIApi(configuration);
 
   const animateImage = async () => {
     try {
@@ -50,13 +49,14 @@ function App() {
   const generateImage = async () => {
     setPlaceholder(`Search ${prompt}..`);
     setLoading(true);
-    const res = await openai.createImage({
+    const res = await openai.images.generate({
+      model: "dall-e-3",
       prompt: prompt,
       n: 1,
-      size: "512x512",
+      size: "1024x1024",
     });
     setLoading(false);
-    setResult(res.data.data[0].url);
+    setResult(res.data[0].url);
   };
 
   return (
@@ -74,11 +74,7 @@ function App() {
           <h1>Animasaurus</h1>
           <div className="app-columns">
             <div className="input-column">
-              <div className="input-column">
-                <Lottie options={defaultOptions} height={400} width={400} />
-                {/* Rest of your code */}
-              </div>
-              {/* Rest of your code */}
+              <Lottie options={defaultOptions} height={200} width={200} />
             </div>
             <div className="input-column">
               <h2>Describe your character</h2>
@@ -89,7 +85,7 @@ function App() {
                 rows="10"
                 cols="40"
               />
-              <button onClick={generateImage}>Generate an Image</button>
+              <button onClick={generateImage}>Generate</button>
               {result.length > 0 ? (
                 <img className="result-image" src={result} alt="result" />
               ) : (
