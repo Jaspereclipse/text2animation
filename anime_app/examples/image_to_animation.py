@@ -31,7 +31,7 @@ def image_to_animation(img_fn: str, char_anno_dir: str, motion_cfg_fn: str, reta
 
 
 if __name__ == '__main__':
-    image_to_animation_simple(sys.argv[1])
+    image_to_animation_simple(sys.argv[1], sys.argv[2])
     # log_dir = Path('./logs')
     # log_dir.mkdir(exist_ok=True, parents=True)
     # logging.basicConfig(filename=f'{log_dir}/log.txt', level=logging.DEBUG)

@@ -18,7 +18,8 @@ setup(
         'requests==2.31.0',
         'torchserve==0.7.0',
         'tqdm==4.64.1',
-        'Flask==2.3.2'
+        'Flask==2.3.2',
+        'flask-cors==4.0.0'
     ],
     packages=find_packages(),
 )
