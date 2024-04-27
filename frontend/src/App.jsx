@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from 'openai';
 import "./App.css";
 
 function App() {
@@ -9,22 +9,23 @@ function App() {
   const [placeholder, setPlaceholder] = useState(
     "Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
   );
-  const configuration = new Configuration({
-    apiKey: import.meta.env.VITE_Open_AI_Key,
-  });
-
-  const openai = new OpenAIApi(configuration);
+ 
+  const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY, 
+  dangerouslyAllowBrowser: true
+});
 
   const generateImage = async () => {
     setPlaceholder(`Search ${prompt}..`);
     setLoading(true);
-    const res = await openai.createImage({
+    const res = await openai.images.generate({
+      model: "dall-e-3",
       prompt: prompt,
       n: 1,
-      size: "512x512",
+      size: "1024x1024",
     });
     setLoading(false);
-    setResult(res.data.data[0].url);
+    setResult(res.data[0].url);
   };
   return (
     <div className="app-main">
@@ -53,6 +54,7 @@ function App() {
           ) : (
             <></>
           )}
+
         </>
       )}
     </div>
