@@ -76,11 +76,10 @@ function App() {
         </>
       ) : (
         <>
-          <h1>Animasaurus</h1>
+          <Lottie options={defaultOptions} height={150} width={150} />
+          <img src="/logo.svg" alt="Your image" height={80} width={1000} />
+          <br/>
           <div className="app-columns">
-            <div className="input-column">
-              <Lottie options={defaultOptions} height={200} width={200} />
-            </div>
             <div className="input-column">
               <h2>Describe your character</h2>
               <textarea
