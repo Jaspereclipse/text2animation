@@ -29,7 +29,7 @@ function App() {
 
   const animateImage = async () => {
     try {
-      const response = await fetch("https://your-animation-api.com/animate", {
+      const response = await fetch("http://127.0.0.1:5000/animate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageUrl: result }),
@@ -39,8 +39,13 @@ function App() {
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
-      setAnimatedResult(data.animatedImageUrl);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        const base64data = reader.result;
+        setAnimatedResult(base64data);
+      }
+      reader.readAsDataURL(blob);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -96,7 +101,7 @@ function App() {
               <h2>Animate your character</h2>
               <button onClick={animateImage}>Animate</button>
               {animatedResult && (
-                <img src={animatedResult} alt="Animated result" />
+                <img src={animatedResult} alt="Animated result" width="500" height="500" />
               )}
             </div>
           </div>
