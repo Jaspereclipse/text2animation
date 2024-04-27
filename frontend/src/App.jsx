@@ -97,7 +97,7 @@ function App() {
               />
               <button onClick={generateImage}>Generate</button>
               {result.length > 0 ? (
-                <img className="result-image" src={result} alt="result" />
+                <img className="result-image" src={result} alt="result" width="400" height="400" />
               ) : (
                 <></>
               )}
@@ -106,12 +106,18 @@ function App() {
               <h2>Animate your character</h2>
               <button onClick={animateImage}>Animate</button>
               {animatedResult && (
-                <img
-                  src={animatedResult}
-                  alt="Animated result"
-                  width="500"
-                  height="500"
-                />
+                  <div
+                  id="animation-result"
+                  style={{
+                    margin: "40 40 40 40",
+                  }}>
+                    <img
+                      src={animatedResult}
+                      alt="Animated result"
+                      width="500"
+                      height="500"
+                    />
+                  </div>
               )}
             </div>
           </div>
