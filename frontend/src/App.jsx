@@ -28,6 +28,7 @@ function App() {
   });
 
   const animateImage = async () => {
+    setLoading(true);
     try {
       const response = await fetch("http://127.0.0.1:5000/animate", {
         method: "POST",
@@ -41,13 +42,15 @@ function App() {
 
       const blob = await response.blob();
       const reader = new FileReader();
-      reader.onloadend = function() {
+      reader.onloadend = function () {
         const base64data = reader.result;
+        setLoading(false);
         setAnimatedResult(base64data);
-      }
+      };
       reader.readAsDataURL(blob);
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
   };
 
@@ -56,7 +59,9 @@ function App() {
     setLoading(true);
     const res = await openai.images.generate({
       model: "dall-e-3",
-      prompt: prompt + " style: cute 2d image, arms and legs stretching out, white background only, no shadow",
+      prompt:
+        prompt +
+        " style: cute 2d image, arms and legs stretching out, white background only, no shadow",
       n: 1,
       size: "1024x1024",
     });
@@ -68,10 +73,11 @@ function App() {
     <div className="app-main">
       {loading ? (
         <>
-          <h2>Generating...Please Wait...</h2>
-          <div class="lds-ripple">
-            <div></div>
-            <div></div>
+          <div>
+            <h2 className="animate-progress">Animagic in process...</h2>
+            <div>
+              <Lottie options={defaultOptions} height={600} width={600} />
+            </div>
           </div>
         </>
       ) : (
@@ -100,7 +106,12 @@ function App() {
               <h2>Animate your character</h2>
               <button onClick={animateImage}>Animate</button>
               {animatedResult && (
-                <img src={animatedResult} alt="Animated result" width="500" height="500" />
+                <img
+                  src={animatedResult}
+                  alt="Animated result"
+                  width="500"
+                  height="500"
+                />
               )}
             </div>
           </div>
